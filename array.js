@@ -156,7 +156,7 @@ function kAppearance(arr, k){
     console.log(count);
 }
 
-kAppearance([1, 2, 1, 1, 1], 3);
+// kAppearance([1, 2, 1, 1, 1], 3);
 
 
 function kAppearance(arr, k){
@@ -439,3 +439,125 @@ function productOfArr(arr){
 }
 
 // productOfArr([1,2,4,6])
+
+
+var maximizeSum = function(nums, k) {
+    let ans = 0
+    let maxNum = 0
+    let kv = {}
+    // Find the maximum elemnt from nums
+    for(let i = 0; i < nums.length; i++){
+        if(nums[i] > maxNum){
+            maxNum = nums[i];
+            kv.maxNum = i
+        }
+    }
+    
+    for(let i = 0; i < k; i++){
+        ans+= nums[kv.maxNum]
+        nums[kv.maxNum]++
+    }
+    return ans
+    // total+= maxNum
+    // increase the maxNum by 1
+};
+
+// maximizeSum([5,5,5], 2)
+
+
+function countSubArrays(arr, k){
+    // Intilizing prefix sum
+    let prefixSum = 0;
+    
+    // Intializing map to track frequency
+    let freq = new Map();
+
+    // Setting 0: 1 in the map for the edege case where the subarray start from 0 index
+
+    freq.set(0, 1);
+
+    // initilizing count variable
+    let count = 0;
+
+
+    // iterate the array
+
+    for(let i = 0; i< arr.length; i++){
+
+        // Calculating running prefixSum
+        prefixSum+= arr[i]
+
+        // Check if i already have prefixSum - k in the map 
+
+        if(freq.has(prefixSum - k )){
+            // increaseing the count if we found a prefixSum - k
+            count += freq.get(prefixSum - k)
+        }
+
+        freq.set(prefixSum, (freq.get(prefixSum) || 0) +1)
+    }
+    console.log(count);
+    
+    return count
+}
+
+// countSubArrays([1, 1, 1], 2)
+
+
+
+// class Solution{
+    function encode(s) {
+       let encodedS = " "
+        for(let str of s){
+            encodedS += str.length + '#' + str
+        }
+        return encodedS
+    }
+
+// console.log(encode(["Hello", "World"]));
+    
+    
+// function decode(s) {
+//     const res = [];
+//     let i = 0;
+    
+
+//     while (i < s.length) {
+//         let j = i;
+//         const length = Number(s.slice(i, j));
+//         j++; // skip '#'
+//         while (s[j] !== '#') j++;
+//         const str = s.slice(j, j + length);
+//         res.push(str);
+//         i = j + length;
+//     }
+
+//     return res;
+// }
+
+// console.log(decode("5#Hello#5World"));
+// console.log(decode("5#Hello5#World"))
+
+
+function decode(s) {
+    const res = [];
+    let i = 0;
+
+    while (i < s.length) {
+        let j = i;
+        while (s[j] !== '#') j++;
+        console.log(i , j);
+        
+        const length = Number(s.slice(i, j));
+        j++; // skip '#'
+        console.log(length);
+        
+        const str = s.slice(j, j + length);
+        res.push(str);
+        i = j + length;
+    }
+
+    return res;
+}
+
+console.log(decode(encode(["Hello", "World"])));
